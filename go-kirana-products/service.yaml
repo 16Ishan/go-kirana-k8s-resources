@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: go-kirana-products-service
+    namespace: products
+    labels:
+        app: go-kirana-products
+spec:
+  selector:
+    app: go-kirana-products
+  ports:
+    - port: 8080
+      targetPort: 8080

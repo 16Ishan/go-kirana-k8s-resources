@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: go-kirana-products-config
+  namespace: products
+data:
+  DB_URL: jdbc:postgresql://host.minikube.internal:5432/go_kirana
+  application.yaml: |
+    spring:
+      application:
+        name: go-kirana-products
+      datasource:
+        url: ${DB_URL}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
+      jpa:
+        show-sql: true
+    
+    springdoc:
+      api-docs:
+        path: /v3/api-docs
+      swagger-ui:
+        path: /swagger-ui.html
+    
+    server:
+      port: 8080
+    
+    app:
+      pagination:
+        max-size: 100
