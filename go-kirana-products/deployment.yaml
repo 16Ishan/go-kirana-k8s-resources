@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: go-kirana-products
+    namespace: products
+    labels:
+        app: go-kirana-products
+spec:
+  replicas: 1
+  selector:
+      matchLabels:
+        app: go-kirana-products
+  template:
+    metadata:
+      labels:
+        app: go-kirana-products
+    spec:
+      containers:
+        - name: go-kirana-products
+          image: ishan16/go-kirana-products:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_URL
+                  name: go-kirana-products-config
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: DB_USERNAME
+                  name: go-kirana-products-secret
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DB_PASSWORD
+                  name: go-kirana-products-secret
